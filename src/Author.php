@@ -33,17 +33,30 @@
 
         function save()
         {
-
+            $statement = $GLOBALS['DB']->query("INSERT INTO authors (name) VALUES ('{$this->getName()}') RETURNING id;");
+            $id_array = $statement->fetch(PDO::FETCH_ASSOC);
+            $this->setId($id_array['id']);
         }
 
         static function getAll()
         {
+            $statement = $GLOBALS['DB']->query("SELECT * FROM authors;");
+            $author_rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+            $authors = array();
+            foreach($author_rows as $row)
+            {
+                $id = $row['id'];
+                $name = $row['name'];
+                $new_author = new Author($name, $id);
+                array_push($authors, $new_author);
+            }
+            return $authors;
         }
 
         static function deleteAll()
         {
-
+            $GLOBALS['DB']->exec("DELETE FROM authors *;");
         }
 
     }
