@@ -17,6 +17,31 @@
             Book::deleteAll();
         }
 
+        function test_findByIdNull()
+        {
+            //arrange
+
+            //act
+            $result = Book::findById(-1);
+
+            //assert
+            $this->assertEquals(null, $result);
+        }
+
+        function test_findById()
+        {
+            //arrange
+            $test_book = new Book("Divergent");
+            $test_book->save();
+
+            //act
+            $test_book_id = $test_book->getId();
+            $result = Book::findById($test_book_id);
+
+            //assert
+            $this->assertEquals($test_book, $result);
+        }
+
         function test_update()
         {
             //arrange

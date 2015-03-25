@@ -47,8 +47,8 @@
 
         static function getAll()
         {
-            $book_array = $GLOBALS['DB']->query("SELECT * FROM books;");
-            $book_array = $book_array->fetchAll(PDO::FETCH_ASSOC);
+            $statement = $GLOBALS['DB']->query("SELECT * FROM books;");
+            $book_array = $statement->fetchAll(PDO::FETCH_ASSOC);
 
             $books = array();
             foreach($book_array as $book)
@@ -65,6 +65,28 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM books *;");
+        }
+
+        static function findById($find_id)
+        {
+            $statement = $GLOBALS['DB']->query("SELECT * FROM books WHERE id = {$find_id};");
+            $book_rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            $new_book = null;
+            foreach($book_rows as $row)
+            {
+                $id = $row['id'];
+                $title = $row['title'];
+                $new_book = new Book($title, $id);
+            }
+            return $new_book;
+        }
+
+        static function findByTitle($find_title)
+        {
+            $statement = $GLOBALS['DB']->query("SELECT * FROM books WHERE title = '{$find_title}';");
+
+
         }
 
     }
