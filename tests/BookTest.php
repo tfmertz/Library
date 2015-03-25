@@ -45,6 +45,20 @@
             $this->assertEquals(null, $result);
         }
 
+        function test_findByTitlePartial()
+        {
+            //arrange
+            $test_book = new Book("Hunger Games");
+            $test_book->save();
+
+            //act
+            $test_book_title = "ung";
+            $result = Book::findByTitle($test_book_title);
+
+            //assert
+            $this->assertEquals($test_book, $result);
+        }
+
         function test_findByTitle()
         {
             //arrange
