@@ -41,13 +41,38 @@
 
         function update($new_title)
         {
-            $statement = $GLOBALS['DB']->exec("UPDATE books SET title = '{$new_title}' WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE books SET title = '{$new_title}' WHERE id = {$this->getId()};");
             $this->setTitle($new_title);
         }
 
         function delete()
         {
-            $statement = $GLOBALS['DB']->exec("DELETE FROM books * WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM books * WHERE id = {$this->getId()};");
+        }
+
+        function addAuthor($author)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO books_authors (book_id, author_id) VALUES ({$this->getId()}, {$author->getId()});");
+        }
+
+        function getAuthors()
+        {
+            //STUDY THIS JOIN STATEMENT DAVID!!!!
+            $statement = $GLOBALS['DB']->query("SELECT authors.* FROM books
+            JOIN books_authors ON (books.id = books_authors.book_id)
+            JOIN authors ON (authors.id = books_authors.author_id) WHERE books.id = {$this->getId()};");
+
+            $author_array = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            $authors = array();
+            foreach($author_array as $author)
+            {
+                $id = $author['id'];
+                $name = $author['name'];
+                $new_author = new Author($name, $id);
+                array_push($authors, $new_author);
+            }
+            return $authors;
         }
 
         static function getAll()

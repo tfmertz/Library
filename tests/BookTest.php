@@ -15,6 +15,42 @@
         protected function tearDown()
         {
             Book::deleteAll();
+            Author::deleteAll();
+        }
+
+        function test_getAuthors()
+        {
+            //arrange
+            $test_book = new Book("2001");
+            $test_author = new Author("Jim Shatner");
+            $test_author2 = new Author("William Shatner");
+
+            $test_book->save();
+            $test_author->save();
+            $test_author2->save();
+
+            //assert
+            $test_book->addAuthor($test_author);
+            $test_book->addAuthor($test_author2);
+            $result = $test_book->getAuthors();
+            //Act
+            $this->assertEquals([$test_author, $test_author2], $result);
+        }
+
+        function test_addAuthor()
+        {
+            //arrange
+            $test_book = new Book("2001");
+            $test_author = new Author("Jim Shatner");
+
+            $test_book->save();
+            $test_author->save();
+
+            //assert
+            $test_book->addAuthor($test_author);
+            $result = $test_book->getAuthors();
+            //Act
+            $this->assertEquals([$test_author], $result);
         }
 
         function test_delete()
