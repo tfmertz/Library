@@ -38,6 +38,40 @@
             $this->setId($id_array['id']);
         }
 
+
+        //STATIC FUNCTIONS BELOW
+        static function findByName($search_name)
+        {
+            $statement = $GLOBALS['DB']->query("SELECT * FROM authors WHERE name LIKE '%{$search_name}%';");
+            $author_rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            $authors = array();
+            foreach($author_rows as $row)
+            {
+                $id = $row['id'];
+                $name = $row['name'];
+                $new_author = new Author($name, $id);
+                array_push($authors, $new_author);
+            }
+            return $authors;
+        }
+
+        static function findById($search_id)
+        {
+            $statement = $GLOBALS['DB']->query("SELECT * FROM authors WHERE id = {$search_id};");
+            $author_rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            $author = null;
+            foreach($author_rows as $row)
+            {
+                $id = $row['id'];
+                $name = $row['name'];
+                $new_author = new Author($name, $id);
+                $author = $new_author;
+            }
+            return $author;
+        }
+
         static function getAll()
         {
             $statement = $GLOBALS['DB']->query("SELECT * FROM authors;");

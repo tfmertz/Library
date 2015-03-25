@@ -17,6 +17,78 @@
             Author::deleteAll();
         }
 
+        function test_findByNameNull()
+        {
+            //arrange
+
+            //act
+            $search_name = "Bob";
+            $result = Author::findByName($search_name);
+
+            //assert
+            $this->assertEquals([], $result);
+        }
+
+        function test_findByNameMultiple()
+        {
+            //arrange
+            $test_author = new Author("Larry A");
+            $test_author->save();
+            $test_author2 = new Author("Larry B");
+            $test_author2->save();
+            $test_author3 = new Author("Larry C");
+            $test_author3->save();
+            $test_author4 = new Author("Margaret");
+            $test_author4->save();
+
+            //act
+            $search_name = "Larry";
+            $result = Author::findByName($search_name);
+
+            //assert
+            $this->assertEquals([$test_author, $test_author2, $test_author3], $result);
+        }
+
+        function test_findByName()
+        {
+            //arrange
+            $test_author = new Author("Larry Truman");
+            $test_author->save();
+
+            //act
+            $search_name = $test_author->getName();
+            $result = Author::findByName($search_name);
+
+            //assert
+            $this->assertEquals([$test_author], $result);
+        }
+
+        function test_findByIdNull()
+        {
+            //arrange
+
+            //act
+            $search_id = -1;
+            $result = Author::findById($search_id);
+
+            //assert
+            $this->assertEquals(null, $result);
+        }
+
+        function test_findById()
+        {
+            //arrange
+            $test_author = new Author("Mary Jane");
+            $test_author->save();
+
+            //act
+            $search_id = $test_author->getId();
+            $result = Author::findById($search_id);
+
+            //assert
+            $this->assertEquals($test_author, $result);
+        }
+
         function test_deleteAll()
         {
             //arrange
