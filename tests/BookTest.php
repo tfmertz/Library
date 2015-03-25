@@ -42,7 +42,7 @@
             $result = Book::findByTitle($test_book_title);
 
             //assert
-            $this->assertEquals(null, $result);
+            $this->assertEquals([], $result);
         }
 
         function test_findByTitlePartial()
@@ -56,7 +56,27 @@
             $result = Book::findByTitle($test_book_title);
 
             //assert
-            $this->assertEquals($test_book, $result);
+            $this->assertEquals([$test_book], $result);
+        }
+
+        function test_findByTitleMultiple()
+        {
+            //arrange
+            $test_book = new Book("Hunger Games");
+            $test_book2 = new Book("Hunger Names");
+            $test_book3 = new Book("Hunger Frames");
+
+            $test_book->save();
+            $test_book2->save();
+            $test_book3->save();
+
+
+            //act
+            $test_book_title = "unger";
+            $result = Book::findByTitle($test_book_title);
+
+            //assert
+            $this->assertEquals([$test_book, $test_book2, $test_book3], $result);
         }
 
         function test_findByTitle()
@@ -70,7 +90,7 @@
             $result = Book::findByTitle($test_book_title);
 
             //assert
-            $this->assertEquals($test_book, $result);
+            $this->assertEquals([$test_book], $result);
         }
 
         function test_findByIdNull()
@@ -124,6 +144,32 @@
 
             //assert
             $this->assertEquals("The Great Gatsby", $test_book->getTitle());
+        }
+
+        function test_deleteAll()
+        {
+            //Assert
+            $test_book = new Book("Huckaberry");
+            $test_book->save();
+            //Act
+            Book::deleteAll();
+            $all_books = Book::getAll();
+
+            //Assert
+            $this->assertEquals([], $all_books);
+        }
+
+        function test_getAll()
+        {
+            //Arrange
+            $test_book = new Book("hello there!");
+            $test_book->save();
+
+            //Act
+            $all_books = Book::getAll();
+
+            //Assert
+            $this->assertEquals([$test_book], $all_books);
         }
 
         function test_save()

@@ -92,14 +92,15 @@
             $statement = $GLOBALS['DB']->query("SELECT * FROM books WHERE title LIKE '%{$find_title}%';");
             $book_rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            $new_book = null;
+            $new_books = [];
             foreach($book_rows as $row)
             {
                 $title = $row['title'];
                 $id = $row['id'];
                 $new_book = new Book($title, $id);
+                array_push($new_books, $new_book);
             }
-            return $new_book;
+            return $new_books;
         }
 
     }
