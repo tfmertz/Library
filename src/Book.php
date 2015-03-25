@@ -39,6 +39,12 @@
             $this->setId($id_array['id']);
         }
 
+        function update($new_title)
+        {
+            $statement = $GLOBALS['DB']->exec("UPDATE books SET title = '{$new_title}' WHERE id = {$this->getId()};");
+            $this->setTitle($new_title);
+        }
+
         static function getAll()
         {
             $book_array = $GLOBALS['DB']->query("SELECT * FROM books;");

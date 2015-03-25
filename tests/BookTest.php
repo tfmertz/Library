@@ -17,6 +17,34 @@
             Book::deleteAll();
         }
 
+        function test_update()
+        {
+            //arrange
+            $test_book = new Book("The Grt Gatsby");
+            $test_book->save();
+
+            //act
+            $test_book->update("The Great Gatsby");
+            $result = Book::getAll();
+
+            //assert
+            $this->assertEquals("The Great Gatsby", $result[0]->getTitle());
+        }
+
+        function test_updateObject()
+        {
+            //arrange
+            $test_book = new Book("The Grt Gatsby");
+            $test_book->save();
+
+            //act
+            $test_book->update("The Great Gatsby");
+            $result = Book::getAll();
+
+            //assert
+            $this->assertEquals("The Great Gatsby", $test_book->getTitle());
+        }
+
         function test_save()
         {
             //Arrange
