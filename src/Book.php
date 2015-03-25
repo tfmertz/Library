@@ -85,8 +85,16 @@
         static function findByTitle($find_title)
         {
             $statement = $GLOBALS['DB']->query("SELECT * FROM books WHERE title = '{$find_title}';");
+            $book_rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-
+            $new_book = null;
+            foreach($book_rows as $row)
+            {
+                $title = $row['title'];
+                $id = $row['id'];
+                $new_book = new Book($title, $id);
+            }
+            return $new_book;
         }
 
     }
