@@ -38,7 +38,6 @@
             $this->setId($id_array['id']);
         }
 
-
         //STATIC FUNCTIONS BELOW
         static function findByName($search_name)
         {
@@ -92,7 +91,6 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM authors *;");
         }
-
     }
 
 
