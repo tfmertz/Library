@@ -17,6 +17,20 @@
             Book::deleteAll();
         }
 
+        function test_delete()
+        {
+            //Arrange
+            $test_book = new Book ("Deleted");
+            $test_book->save();
+
+            //Act
+            $test_book->delete();
+            $result = Book::getAll();
+
+            //Assert
+            $this->assertEquals([], $result);
+        }
+
         function test_findByTitleNull()
         {
             //arrange
