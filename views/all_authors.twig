@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Authors</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <p><a href="/">Home</a> &gt; Authors</p>
+            <h3> All the authors</h3>
+        </div>
+        <div class="row">
+            {% if author_array is not empty %}
+            <ul>
+                {% for author in author_array %}
+                <li> {{ author.getName }}
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class = "row">
+            <form action = "/authors" method="post">
+                <div class="form-group">
+                  <label name = "author_add">Add an author</label>
+                  <input name = "author_add" id="author_add" type ="text" class="form-control">
+
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

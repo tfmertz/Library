@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <title>Library</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <p>
+                    <a href="/">Home</a> &gt; Books
+                </p>
+            </div>
+
+            <div class="row">
+                <h1>Entire Book Catalog</h1>
+
+                {% if book_array is not empty %}
+
+                    <ul>
+                        {% for book in book_array %}
+                            <li>{{book.getTitle()}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="row">
+                <form action="/books" method="post">
+                    <div class="form-group">
+                        <label for="title">Enter Title</label>
+                        <input type="text" name="title" id="title" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success" name="submit">Add a Book</button>
+                </form>
+            </div>
+
+
+        </div>
+    </body>
+</html>
