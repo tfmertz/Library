@@ -38,14 +38,35 @@
             $this->setId($id_array['id']);
         }
 
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM authors * WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM books_authors * WHERE author_id = {$this->getId()};");
+        }
+
         function addBook($new_book)
         {
-
+            $GLOBALS['DB']->exec("INSERT INTO books_authors (book_id,author_id) VALUES ({$new_book->getId()}, {$this->getId()});");
         }
 
         function getBooks()
         {
-            
+            $statement = $GLOBALS['DB']->query("SELECT books.* FROM books
+              JOIN books_authors ON(books.id = books_authors.book_id)
+              JOIN authors ON(authors.id = books_authors.author_id)
+                   WHERE author_id = {$this->getId()};");
+
+                   $book_array = $statement->fetchAll(PDO::FETCH_ASSOC);
+                   $hold_books = [];
+
+                   foreach($book_array as $bookrow)
+                   {
+                       $id = $bookrow['id'];
+                       $title = $bookrow['title'];
+                       $new_book = new Book($title, $id);
+                       array_push($hold_books, $new_book);
+                   }
+              return $hold_books;
         }
 
         //STATIC FUNCTIONS BELOW
@@ -100,6 +121,7 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM authors *;");
+            $GLOBALS['DB']->exec("DELETE FROM books_authors *;");
         }
     }
 
