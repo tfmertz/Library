@@ -22,15 +22,24 @@
         </div>
 
         <div class = "row">
-            <form action = "/authors" method="post">
-                <div class="form-group">
-                  <label name = "author_add">Add an author</label>
-                  <input name = "author_add" id="author_add" type ="text" class="form-control">
+            <div class="col-sm-6">
+                <form action = "/authors" method="post">
+                    <div class="form-group">
+                      <label name = "author_add">Add an author</label>
+                      <input name = "author_add" id="author_add" type ="text" class="form-control">
 
-                </div>
+                    </div>
 
-                <button type="submit" class="btn btn-success">Submit</button>
-            </form>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <form action="/authors" method="post">
+                    <input type="hidden" name="_method" value="delete">
+
+                    <button type="submit" class="btn btn-danger">Delete All</button>
+                </form>
+            </div>
         </div>
     </div>
 

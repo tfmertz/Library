@@ -11,9 +11,26 @@
         <p>Take a look at our <a href="/books"><button class="btn btn-warning btn-xs">books</button></a></p>
         <p>Here are our available <a href="/authors"><button class="btn btn-success btn-xs">authors</button></a></p>
 
-        <p>Search by Author: </p>
+        <form action="/" method="post">
+            <div class="form-group">
+                <label for="search">Search by Author</label>
+                <input type="text" name="search" id="search" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
 
 
+        {% if search_results is not empty %}
+        <div class="row">
+            {% for author in search_results %}
+                <p>
+                    {{ author.getName() }}
+                </p>
+            {% endfor %}
+        </div>
+
+        {% endif %}
     </div>
 </body>
 </html>
