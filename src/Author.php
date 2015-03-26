@@ -38,6 +38,16 @@
             $this->setId($id_array['id']);
         }
 
+        function addBook($new_book)
+        {
+
+        }
+
+        function getBooks()
+        {
+            
+        }
+
         //STATIC FUNCTIONS BELOW
         static function findByName($search_name)
         {

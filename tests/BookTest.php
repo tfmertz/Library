@@ -18,6 +18,50 @@
             Author::deleteAll();
         }
 
+        function test_delete_getBooks()
+        {
+            //arrange
+            $test_book = new Book("The Great Gatsby");
+            $test_book->save();
+
+            $test_author = new Author("Jim");
+            $test_author2 = new Author("TK");
+            $test_author->save();
+            $test_author2->save();
+
+            $test_book->addAuthor($test_author);
+            $test_book->addAuthor($test_author2);
+
+            //act
+            $test_book->delete();
+            $result = $test_author->getBooks();
+
+            //assert
+            $this->assertEquals([], $result);
+        }
+
+        function test_delete_getAuthors()
+        {
+            //arrange
+            $test_book = new Book("The Great Gatsby");
+            $test_book->save();
+
+            $test_author = new Author("Jim");
+            $test_author2 = new Author("TK");
+            $test_author->save();
+            $test_author2->save();
+
+            $test_book->addAuthor($test_author);
+            $test_book->addAuthor($test_author2);
+
+            //act
+            $test_book->delete();
+            $result = $test_book->getAuthors();
+
+            //assert
+            $this->assertEquals([], $result);
+        }
+
         function test_getAuthors()
         {
             //arrange
