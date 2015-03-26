@@ -18,6 +18,27 @@
             Book::deleteAll();
         }
 
+        function test_delete_getAuthors()
+        {
+            //Arrange
+
+            $test_author = new Author("Timmy");
+            $test_author->save();
+
+            $title="2002";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $test_author->addBook($test_book);
+
+            //Act
+            $test_author->delete();
+            $test_vacant = $test_book->getAuthors();
+
+            //Assert
+            $this->assertEquals([], $test_vacant);
+        }
+
         function test_delete_getBooks()
         {
             //Arrange
@@ -144,6 +165,34 @@
 
             //assert
             $this->assertEquals($test_author, $result);
+        }
+
+        function test_update_database()
+        {
+            //arrange
+            $test_author = new Author("Tolkien");
+            $test_author->save();
+
+            //act
+            $test_author->update("J.R.R. Tolkien");
+            $result = Author::findById($test_author->getId());
+
+            //assert
+            $this->assertEquals("J.R.R. Tolkien", $result->getName());
+        }
+
+        function test_update()
+        {
+            //arrange
+            $test_author = new Author("Tolkien");
+            $test_author->save();
+
+            //act
+            $test_author->update("J.R.R. Tolkien");
+            $result = $test_author->getName();
+
+            //assert
+            $this->assertEquals("J.R.R. Tolkien", $result);
         }
 
         function test_deleteAll()
