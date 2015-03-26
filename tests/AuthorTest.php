@@ -15,6 +15,63 @@
         protected function tearDown()
         {
             Author::deleteAll();
+            Book::deleteAll();
+        }
+
+        function test_delete_getBooks()
+        {
+            //Arrange
+
+            $test_author = new Author("Timmy");
+            $test_author->save();
+
+            $title="2002";
+            $test_book = new Book($title);
+            $test_book->save();
+            $test_author->addBook($test_book);
+
+            //Act
+            $test_author->delete();
+            $test_vacant = $test_author->getBooks();
+
+            //Assert
+            $this->assertEquals([], $test_vacant);
+        }
+
+        function test_getBooks()
+        {
+            //arrange
+            $test_author = new Author("Jim bob");
+            $test_author->save();
+
+            $test_book = new Book("Ware and Peese");
+            $test_book->save();
+            $test_book2 = new Book("Adventure Time");
+            $test_book2->save();
+
+            $test_author->addBook($test_book);
+            $test_author->addBook($test_book2);
+
+            //act
+            $result = $test_author->getBooks();
+
+            //assert
+            $this->assertEquals([$test_book, $test_book2], $result);
+        }
+
+        function test_addBook()
+        {
+            //Arrange
+            $test_author = new Author("Tom");
+            $test_author->save();
+            $new_book = new Book("2001");
+            $new_book->save();
+
+            //Act
+            $test_author->addBook($new_book);
+            $test_added_book = $test_author->getBooks();
+            //Assert
+            $this->assertEquals([$new_book], $test_added_book);
         }
 
         function test_findByNameNull()
